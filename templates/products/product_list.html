@@ -1,0 +1,12 @@
+{% block content %}
+<div>
+	List View
+	<ul>
+		{% for instance in object_list %}
+			<li style="display: block;">	{{ instance.title }} - {{ instance.price }}</li>
+		{% empty %}
+			<li> No products yet!</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock content %}
