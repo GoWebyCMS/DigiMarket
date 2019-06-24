@@ -5,7 +5,7 @@ from .models import Product
 from .forms import ProductModelForm
 
 
-def edit_view(request, slug=None, template_path='products/product_edit.html'):
+def product_edit(request, slug=None, template_path='products/product_edit.html'):
 	product = get_object_or_404(Product, slug=slug)
 	form = ProductModelForm(request.POST or None, instance=product)
 	if form.is_valid():
@@ -16,7 +16,7 @@ def edit_view(request, slug=None, template_path='products/product_edit.html'):
 	return render(request, template_path, context)
 
 
-def create_view(request, template_path='products/product_create.html'):
+def product_create(request, template_path='products/product_create.html'):
 	form = ProductModelForm(request.POST)
 	if form.is_valid():
 		# get form data
@@ -34,13 +34,13 @@ def create_view(request, template_path='products/product_create.html'):
 	return render(request, template_path, context)
 
 
-def detail_view(request, slug=None, template_path='products/detail_view.html'):
+def product_detail(request, slug=None, template_path='products/detail_view.html'):
 	# get item
 	product = get_object_or_404(Product, slug=slug)
 	context = {'product': product}
 	return render(request, template_path, context)
 
 
-def list_view(request, template_path='products/list_view.html'):
+def product_list(request, template_path='products/list_view.html'):
 	context = {}
 	return render(request, template_path, context)

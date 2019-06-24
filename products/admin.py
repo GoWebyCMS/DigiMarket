@@ -6,7 +6,7 @@ from .models import Product
 
 
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ('__unicode__', 'description', 'price', 'sale_price')
+	list_display = ('__unicode__', 'description', 'price', 'sale_price', 'slug')
 	search_fields = ['title', 'description']
 	list_filter = ['price']
 	list_editable = ['sale_price']
