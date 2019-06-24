@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
+
 
 # Create your views here.
 from .models import Product
@@ -33,11 +34,16 @@ def product_create(request, template_path='products/product_add_edit.html'):
 	return render(request, template_path, context)
 
 
-def product_detail(request, slug=None, template_path='products/detail_view.html'):
-	# get item
-	product = get_object_or_404(Product, slug=slug)
-	context = {'product': product}
-	return render(request, template_path, context)
+class ProductDetailView(DetailView):
+	model = Product
+
+	def get_object(self, *args, **kwargs):
+		slug = self.kwargs.get('slug')
+		if slug:
+			obj = get_object_or_404(Product, slug=slug)
+		else:
+			obj = super(ProductDetailView, self).get_object(*args, **kwargs)
+		return obj
 
 
 class ProductListView(ListView):
