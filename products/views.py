@@ -5,18 +5,18 @@ from .models import Product
 from .forms import ProductModelForm
 
 
-def product_edit(request, slug=None, template_path='products/product_edit.html'):
+def product_edit(request, slug=None, template_path='products/product_add_edit.html'):
 	product = get_object_or_404(Product, slug=slug)
 	form = ProductModelForm(request.POST or None, instance=product)
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.save()
-
-	context = dict(form=form)
+	# response
+	context = dict(form=form, submit_btn="Edit Product")
 	return render(request, template_path, context)
 
 
-def product_create(request, template_path='products/product_create.html'):
+def product_create(request, template_path='products/product_add_edit.html'):
 	form = ProductModelForm(request.POST)
 	if form.is_valid():
 		# get form data
@@ -28,9 +28,7 @@ def product_create(request, template_path='products/product_create.html'):
 		new_product.price = data.get('price')
 		new_product.save()
 
-	context = {
-		"form": form,
-	}
+	context = dict(form=form, submit_btn="Add Product")
 	return render(request, template_path, context)
 
 
